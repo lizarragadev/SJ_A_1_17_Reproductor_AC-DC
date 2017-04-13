@@ -10,6 +10,13 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * @author Gustavo Lizarraga
+     * @version 1.0
+     * @date 13-04-17
+     *
+     * */
+
     private Button btnPlay;
     private Button btnPause;
     private Button btnStop;
