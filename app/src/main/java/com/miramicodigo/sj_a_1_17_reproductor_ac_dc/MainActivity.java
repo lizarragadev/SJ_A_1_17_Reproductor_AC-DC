@@ -1,5 +1,7 @@
 package com.miramicodigo.sj_a_1_17_reproductor_ac_dc;
 
+import android.content.SyncStatusObserver;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Animation animacion;
 
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,22 +47,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initUI() {
-
+        btnPlay.setEnabled(true);
+        btnPause.setEnabled(false);
+        btnStop.setEnabled(false);
     }
 
     public void initMediaPlayer() {
-
+        mediaPlayer = MediaPlayer.create(
+                getApplicationContext(),
+                R.raw.acdc);
     }
 
     public void play(View view) {
-
+        try {
+            mediaPlayer.start();
+            ivAlpha.startAnimation(animacion);
+            btnPause.setEnabled(true);
+            btnStop.setEnabled(true);
+            btnPlay.setEnabled(false);
+        } catch (Exception e){
+            System.out.println("Hubo un error: ");
+        }
     }
 
     public void pause(View view) {
-
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+            ivAlpha.clearAnimation();
+            btnPlay.setEnabled(true);
+            btnStop.setEnabled(false);
+        }
     }
 
     public void stop(View view) {
-
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            initMediaPlayer();
+            ivAlpha.clearAnimation();
+            initUI();
+        }
     }
 }
